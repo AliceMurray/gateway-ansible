@@ -2,7 +2,7 @@
 
 # Gateway target hostname
 hostname=${GW_HOSTNAME:-10.0.1.3}
-gatewayuser=linaro
+gatewayuser=osf
 
 # Location where hawkbit is running
 gitci=${GITCI:-10.0.1.2}
