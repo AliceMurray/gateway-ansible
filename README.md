@@ -29,7 +29,7 @@ ssh-copy-id <gateway host>
 ### IoT-Gateway
 
 ```
-ansible-playbook -e "mqttuser= mqttpass= mqtthost= mqttport= gitci= tag=" -i targethost, -u linaro iot-gateway.yml
+ansible-playbook -e "mqttuser= mqttpass= mqtthost= mqttport= gitci= tag=" -i targethost, -u osf iot-gateway.yml
 ```
 
 Ansible tags:

@@ -58,12 +58,12 @@
   - name: Copy mosquitto config file
     template:
       src: mosquitto.conf
-      dest: /home/linaro/mosquitto.conf
+      dest: /home/osf/mosquitto.conf
   - name: Start mosquitto container
     command: sh -c "docker stop mosquitto; docker rm mosquitto; "\
                    "docker pull {{ hub|default('linarotechnologies') }}/mosquitto:{{ tag|default('latest') }}; "\
                    "docker run --restart=always -d -t --net=host --read-only "\
-                           "-v /home/linaro/mosquitto.conf:/etc/mosquitto/conf.d/mosquitto.conf "\
+                           "-v /home/osf/mosquitto.conf:/etc/mosquitto/conf.d/mosquitto.conf "\
                            "--name mosquitto {{ hub|default('linarotechnologies') }}/mosquitto:{{ tag|default('latest') }}"
   tags:
     - cloud
@@ -76,12 +76,12 @@
   - name: Copy mosquitto config file
     copy:
       src: mosquitto-minimal.conf
-      dest: /home/linaro/mosquitto.conf
+      dest: /home/osf/mosquitto.conf
   - name: Start mosquitto container
     command: sh -c "docker stop mosquitto; docker rm mosquitto; "\
                    "docker pull {{ hub|default('linarotechnologies') }}/mosquitto:{{ tag|default('latest') }}; "\
                    "docker run --restart=always -d -t --net=host --read-only "\
-                           "-v /home/linaro/mosquitto.conf:/etc/mosquitto/conf.d/mosquitto.conf "\
+                           "-v /home/osf/mosquitto.conf:/etc/mosquitto/conf.d/mosquitto.conf "\
                            "--name mosquitto {{ hub|default('linarotechnologies') }}/mosquitto:{{ tag|default('latest') }}"
   tags:
     - mosquitto-local
@@ -96,14 +96,14 @@
   - name: Copy nginx config file
     copy:
       src: nginx-http-proxy.conf
-      dest: /home/linaro/nginx-http-proxy.conf
+      dest: /home/osf/nginx-http-proxy.conf
   - name: Run nginx-http-proxy container
     command: sh -c "docker stop nginx-http-proxy; docker rm nginx-http-proxy; "\
                    "docker pull {{ hub|default('linarotechnologies') }}/nginx:{{ tag|default('latest') }}; "\
                    "docker run --restart=always -d -t --net=host "\
                            "--read-only --tmpfs=/var/run --tmpfs=/var/cache/nginx "\
                            "--add-host=gitci.com:{{ gitci }} "\
-                           "-v /home/linaro/nginx-http-proxy.conf:/etc/nginx/nginx.conf "\
+                           "-v /home/osf/nginx-http-proxy.conf:/etc/nginx/nginx.conf "\
                            "--name nginx-http-proxy {{ hub|default('linarotechnologies') }}/nginx:{{ tag|default('latest') }} "\
                            "nginx-debug -g 'daemon off;'"
   tags:
@@ -119,13 +119,13 @@
   - name: Copy bluetooth_6lowpand config file
     copy:
       src: bluetooth_6lowpand.conf
-      dest: /home/linaro/bluetooth_6lowpand.conf
+      dest: /home/osf/bluetooth_6lowpand.conf
   - name: Run bt-joiner container
     command: sh -c "docker stop bt-joiner; docker rm bt-joiner; "\
                    "docker pull {{ hub|default('linarotechnologies') }}/bt-joiner:{{ tag|default('latest') }}; "\
                    "docker run --restart=always -d -t --privileged --net=host "\
                            "--read-only --tmpfs=/var/run --tmpfs=/var/lock --tmpfs=/var/log "\
-                           "-v /home/linaro/bluetooth_6lowpand.conf:/etc/bluetooth/bluetooth_6lowpand.conf "\
+                           "-v /home/osf/bluetooth_6lowpand.conf:/etc/bluetooth/bluetooth_6lowpand.conf "\
                            "--name bt-joiner {{ hub|default('linarotechnologies') }}/bt-joiner:{{ tag|default('latest') }}"
   tags:
     - bt-joiner
@@ -153,22 +153,22 @@
   gather_facts: no
   tasks:
   - name: create dashboard directory
-    file: path=/home/linaro/dashboards state=directory mode=0755
+    file: path=/home/osf/dashboards state=directory mode=0755
   - name: Copy default freeboard dashboard
     template:
       src: dashboards/default.json
-      dest: /home/linaro/dashboards/default.json
+      dest: /home/osf/dashboards/default.json
   - name: Copy simple freeboard dashboard
     template:
       src: dashboards/simple.json
-      dest: /home/linaro/dashboards/simple.json
+      dest: /home/osf/dashboards/simple.json
   - name: Run freeboard container
     command: sh -c "docker stop freeboard; docker rm freeboard; "\
                    "docker pull {{ hub|default('linarotechnologies') }}/freeboard:{{ tag|default('latest') }}; "\
                    "docker run --restart=always -d -t -p 80:80 "\
-                           "-v /home/linaro/dashboards/default.json:/usr/share/nginx/html/default.json "\
-                           "-v /home/linaro/dashboards/default.json:/usr/share/nginx/html/dashboard.json "\
-                           "-v /home/linaro/dashboards:/usr/share/nginx/html/dashboards "\
+                           "-v /home/osf/dashboards/default.json:/usr/share/nginx/html/default.json "\
+                           "-v /home/osf/dashboards/default.json:/usr/share/nginx/html/dashboard.json "\
+                           "-v /home/osf/dashboards:/usr/share/nginx/html/dashboards "\
                            "--name freeboard {{ hub|default('linarotechnologies') }}/freeboard:{{ tag|default('latest') }}"
   tags:
     - freeboard
@@ -182,13 +182,13 @@
   - name: Copy nginx config file
     copy:
       src: nginx-lwm2m.conf
-      dest: /home/linaro/nginx-lwm2m.conf
+      dest: /home/osf/nginx-lwm2m.conf
   - name: Run nginx CoAP proxy container
     command: sh -c "docker stop nginx-coap-proxy; docker rm nginx-coap-proxy; "\
                    "docker pull {{ hub|default('linarotechnologies') }}/nginx:{{ tag|default('latest') }}; "\
                    "docker run --restart=always -d -t --net=host "\
                            "--read-only --tmpfs=/var/run  --add-host=gitci.com:{{ gitci }} "\
-                           "-v /home/linaro/nginx-lwm2m.conf:/etc/nginx/nginx.conf "\
+                           "-v /home/osf/nginx-lwm2m.conf:/etc/nginx/nginx.conf "\
                            "--name nginx-coap-proxy {{ hub|default('linarotechnologies') }}/nginx:{{ tag|default('latest') }} "\
                            "nginx-debug -g 'daemon off;'"
   tags:
