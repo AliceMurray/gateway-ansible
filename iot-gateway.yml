@@ -7,7 +7,7 @@
 #  - install ansible,
 #  - create and copy ssh key
 #  - run playbook with appropriate parameters
-#    i.e. ansible-playbook -e "mqttuser= mqttpass= mqtthost= mqttport= gitci= tag=" -i targethost, iot-gateway.yml
+#    i.e. ansible-playbook -e "mqttuser= mqttpass= mqtthost= mqttport= gitci= tag= ansible_python_interpreter=/usr/bin/python3" -i targethost, iot-gateway.yml
 #    where tag is the default docker tag (e.g. latest)
 
 # There are Ansible tags below for the following gateway personalities

@@ -29,7 +29,7 @@ ssh-copy-id <gateway host>
 ### IoT-Gateway
 
 ```
-ansible-playbook -e "mqttuser= mqttpass= mqtthost= mqttport= gitci= tag= registry= registry_user= registry_passwd= registry_email=" -i targethost, -u osf iot-gateway.yml
+ansible-playbook -e "mqttuser= mqttpass= mqtthost= mqttport= gitci= tag= registry= registry_user= registry_passwd= registry_email= ansible_python_interpreter=/usr/bin/python3" -i targethost, -u osf iot-gateway.yml
 ```
 
 Ansible tags:

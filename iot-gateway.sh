@@ -27,4 +27,5 @@ ansible-playbook -e "mqttuser=$cloudmqttuser mqttpass=$cloudmqttpw mqtthost=$clo
                  -e "brokerhost=$hostname brokeruser='' brokerpw=''" \
                  -e "registry=$registry registry_user=$registry_user" \
                  -e "registry_passwd=$registry_passwd registry_email=$registry_email" \
+                 -e "ansible_python_interpreter=/usr/bin/python3" \
                  -u $gatewayuser -i $hostname, iot-gateway.yml --tags $ansibletags
