@@ -33,6 +33,19 @@
 # There are also ansible tags for the individual items;
 #   mosquitto-local, mosquitto-cloud, nginx-http-proxy, bt-joiner, freeboard, etc...
 
+# Container Registry login
+- hosts: all
+  gather_facts: no
+  tasks:
+  - name: Log into container registry
+    docker_login:
+      registry: "{{ registry|default('hub.docker.com') }}"
+      username: "{{ registry_user|default('docker') }}"
+      password: "{{ registry_passwd|default('docker') }}"
+      email: "{{ registry_email|default('docker@docker.com') }}"
+  tags:
+    - always
+
 # This task removes all containers
 - hosts: all
   gather_facts: no
@@ -224,3 +237,14 @@
   tags:
     - leshan
     - local
+
+# Container Registry logout
+- hosts: all
+  gather_facts: no
+  tasks:
+  - name: Log out of container registry
+    docker_login:
+      state: absent
+      email: "{{ registry_email|default('docker@docker.com') }}"
+  tags:
+    - always
