@@ -162,6 +162,7 @@
       privileged: yes
       read_only: yes
       tmpfs:
+        - /run
         - /var/run
         - /var/lock
         - /var/log
