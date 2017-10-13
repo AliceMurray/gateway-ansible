@@ -29,7 +29,7 @@ ssh-copy-id <gateway host>
 ### IoT-Gateway
 
 ```
-ansible-playbook -e "mqttuser= mqttpass= mqtthost= mqttport= gitci= tag=" -i targethost, -u osf iot-gateway.yml
+ansible-playbook -e "mqttuser= mqttpass= mqtthost= mqttport= gitci= tag= registry= registry_user= registry_passwd= registry_email= ansible_python_interpreter=/usr/bin/python3" -i targethost, -u osf iot-gateway.yml
 ```
 
 Ansible tags:
@@ -59,6 +59,10 @@ Arguments:
  - **brokerhost**: mosquitto websocket host (for use with freeboard)
  - **brokeruser**: mosquitto websocket user (for use with freeboard)
  - **brokerpw**: mosquitto websocket password (for use with freeboard)
+ - **registry**: container registry address (e.g. hub.docker.com)
+ - **registry_user**: username for the registry account
+ - **registry_passwd**: plaintext password for the registry account (or token if 2FA is enabled)
+ - **registry_email**: email address for the registry account (required if using Docker Hub)
 
 **Note**: don't forget the comma after *targethost*!
 

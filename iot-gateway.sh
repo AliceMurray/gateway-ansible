@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Container Registry credentials (private or dockerhub)
+registry=${REGISTRY:hub.docker.com}
+registry_user=${REGISTRY_USER:docker}
+registry_passwd=${REGISTRY_PASSWD:docker}
+registry_email=${REGISTRY_EMAIL:docker@docker.com}
+
 # Gateway target hostname
 hostname=${GW_HOSTNAME:-10.0.1.3}
 gatewayuser=osf
@@ -19,4 +25,7 @@ ansibletags=${1:-gateway}
 ansible-playbook -e "mqttuser=$cloudmqttuser mqttpass=$cloudmqttpw mqtthost=$cloudmqtthost mqttport=$cloudmqttport "\
                  -e "gitci=$gitci" \
                  -e "brokerhost=$hostname brokeruser='' brokerpw=''" \
+                 -e "registry=$registry registry_user=$registry_user" \
+                 -e "registry_passwd=$registry_passwd registry_email=$registry_email" \
+                 -e "ansible_python_interpreter=/usr/bin/python3" \
                  -u $gatewayuser -i $hostname, iot-gateway.yml --tags $ansibletags
