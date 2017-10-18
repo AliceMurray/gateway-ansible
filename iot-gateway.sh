@@ -11,7 +11,17 @@ hostname=${GW_HOSTNAME:-10.0.1.3}
 gatewayuser=osf
 
 # Location where hawkbit is running
-gitci=${GITCI:-10.0.1.2}
+if [ -z "$GITCI" ] ; then
+	if which ip >/dev/null 2>&1 ; then
+		echo "probing linux host for routable ip address"
+		defip=$(ip route get 8.8.8.8 | head -n1 | awk '{print $NF}')
+	else
+		echo "probing mac host for routable ip address"
+		defip=$(route get 8.8.8.8 | grep interface | awk '{print $2}' | xargs ifconfig | grep 'inet ' | awk '{print $2}')
+	fi
+fi
+[ -z "$defip" ] && defip=10.0.1.2
+gitci=${GITCI:-$defip}
 
 #Cloudmqtt configuration
 cloudmqtthost=${CLOUDMQTT_HOST:-m12.cloudmqtt.com}
