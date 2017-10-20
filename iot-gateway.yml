@@ -34,6 +34,9 @@
 - hosts: all
   gather_facts: no
   tasks:
+  - assert:
+      that: ( ansible_version.major == 2 and ansible_version.minor >= 4 ) or ( ansible_version.major > 2 )
+      msg: Ansible version 2.4.0 or greater is required.
   - name: Log into container registry
     docker_login:
       registry: "{{ registry|default('hub.docker.com') }}"
