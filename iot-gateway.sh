@@ -1,10 +1,28 @@
 #!/bin/bash
 
-# Container Registry credentials (private or dockerhub)
-registry=${REGISTRY:hub.docker.com}
-registry_user=${REGISTRY_USER:docker}
-registry_passwd=${REGISTRY_PASSWD:docker}
-registry_email=${REGISTRY_EMAIL:docker@docker.com}
+# Container Registry credentials (default is OSF subscriber; can be Docker Hub)
+registry=${REGISTRY:-hub.foundries.io}
+registry_user=${REGISTRY_USER:-this-is-ignored}
+registry_passwd=${REGISTRY_PASSWD}
+registry_email=${REGISTRY_EMAIL:-docker@docker.com}
+
+# The hub variable is a bit of a misnomer.
+if [ "$registry" = "hub.foundries.io" ]; then
+    if [ -z "$registry_passwd" ]; then
+        echo "Error: REGISTRY_PASSWD is unset; cannot log in to hub.foundries.io."
+        exit 1
+    fi
+    hub=hub.foundries.io
+elif [ "$registry" = "hub.docker.com" ]; then
+    hub=opensourcefoundries
+else
+    hub=${HUB}
+fi
+
+if [ -z "$hub" ]; then
+    echo "Error: no hub provided and no value is known."
+    exit 1
+fi
 
 # Gateway target hostname
 hostname=${GW_HOSTNAME:-10.0.1.3}
@@ -33,7 +51,7 @@ cloudmqttpw=${CLOUDMQTT_PASSWD:-password}
 ansibletags=${1:-gateway}
 
 ansible-playbook -e "mqttuser=$cloudmqttuser mqttpass=$cloudmqttpw mqtthost=$cloudmqtthost mqttport=$cloudmqttport "\
-                 -e "gitci=$gitci" \
+                 -e "gitci=$gitci hub=$hub" \
                  -e "brokerhost=$hostname brokeruser='' brokerpw=''" \
                  -e "registry=$registry registry_user=$registry_user" \
                  -e "registry_passwd=$registry_passwd registry_email=$registry_email" \

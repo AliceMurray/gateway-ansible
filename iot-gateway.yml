@@ -39,10 +39,10 @@
       msg: Ansible version 2.4.0 or greater is required.
   - name: Log into container registry
     docker_login:
-      registry: "{{ registry|default('hub.docker.com') }}"
-      username: "{{ registry_user|default('docker') }}"
-      password: "{{ registry_passwd|default('docker') }}"
-      email: "{{ registry_email|default('docker@docker.com') }}"
+      registry: "{{ registry|default('hub.foundries.io') }}"
+      username: "{{ registry_user|default('this-is-ignored') }}"
+      password: "{{ registry_passwd }}"                          # mandatory
+      email: "{{ registry_email|default('docker@docker.com') }}" # only for docker hub
   tags:
     - always
 
@@ -79,7 +79,7 @@
   - name: Start mosquitto container
     docker_container:
       name: mosquitto
-      image: "{{ hub|default('linarotechnologies') }}/mosquitto:{{ tag|default('latest') }}"
+      image: "{{ hub|default('hub.foundries.io') }}/mosquitto:{{ tag|default('latest') }}"
       state: started
       recreate: yes
       restart_policy: always
@@ -106,7 +106,7 @@
   - name: Start nginx-http-proxy container
     docker_container:
       name: nginx-http-proxy
-      image: "{{ hub|default('linarotechnologies') }}/nginx:{{ tag|default('latest') }}"
+      image: "{{ hub|default('hub.foundries.io') }}/nginx:{{ tag|default('latest') }}"
       state: started
       recreate: yes
       restart_policy: always
@@ -136,7 +136,7 @@
   - name: Start bt-joiner container
     docker_container:
       name: bt-joiner
-      image: "{{ hub|default('linarotechnologies') }}/bt-joiner:{{ tag|default('latest') }}"
+      image: "{{ hub|default('hub.foundries.io') }}/bt-joiner:{{ tag|default('latest') }}"
       state: started
       recreate: yes
       restart_policy: always
@@ -164,7 +164,7 @@
   - name: Start hawkbit container (note takes 2-3 minutes to start on some systems)
     docker_container:
       name: hawkbit
-      image: "{{ hub|default('linarotechnologies') }}/hawkbit-update-server:{{ tag|default('latest') }}"
+      image: "{{ hub|default('hub.foundries.io') }}/hawkbit-update-server:{{ tag|default('latest') }}"
       state: started
       recreate: yes
       restart_policy: always
@@ -193,7 +193,7 @@
   - name: Start freeboard container
     docker_container:
       name: freeboard
-      image: "{{ hub|default('linarotechnologies') }}/freeboard:{{ tag|default('latest') }}"
+      image: "{{ hub|default('hub.foundries.io') }}/freeboard:{{ tag|default('latest') }}"
       state: started
       recreate: yes
       restart_policy: always
@@ -219,7 +219,7 @@
   - name: Start nginx CoAP proxy container
     docker_container:
       name: nginx-coap-proxy
-      image: "{{ hub|default('linarotechnologies') }}/nginx:{{ tag|default('latest') }}"
+      image: "{{ hub|default('hub.foundries.io') }}/nginx:{{ tag|default('latest') }}"
       state: started
       recreate: yes
       restart_policy: always
@@ -244,7 +244,7 @@
   - name: Start CF CoAP-HTTP proxy container
     docker_container:
       name: cf-proxy-coap-http
-      image: "{{ hub|default('linarotechnologies') }}/cf-proxy-coap-http:{{ tag|default('latest') }}"
+      image: "{{ hub|default('hub.foundries.io') }}/cf-proxy-coap-http:{{ tag|default('latest') }}"
       state: started
       recreate: yes
       restart_policy: always
@@ -263,7 +263,7 @@
   - name: Start LWM2M Leshan container
     docker_container:
       name: leshan
-      image: "{{ hub|default('linarotechnologies') }}/leshan:{{ tag|default('latest') }}"
+      image: "{{ hub|default('hub.foundries.io') }}/leshan:{{ tag|default('latest') }}"
       state: started
       recreate: yes
       restart_policy: always
@@ -283,6 +283,6 @@
   - name: Log out of container registry
     docker_login:
       state: absent
-      email: "{{ registry_email|default('docker@docker.com') }}"
+      email: "{{ registry_email|default('docker@docker.com') }}" # only for docker hub
   tags:
     - always
