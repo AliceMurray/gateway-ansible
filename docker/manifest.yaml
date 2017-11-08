@@ -1,17 +1,17 @@
-image: linarotechnologies/gateway-ansible:latest
+image: opensourcefoundries/gateway-ansible:latest
 manifests:
   -
-    image: linarotechnologies/gateway-ansible:latest-arm64
+    image: opensourcefoundries/gateway-ansible:latest-arm64
     platform:
       architecture: arm64
       os: linux
   -
-    image: linarotechnologies/gateway-ansible:latest-armhf
+    image: opensourcefoundries/gateway-ansible:latest-armhf
     platform:
       architecture: arm
       os: linux
   -
-    image: linarotechnologies/gateway-ansible:latest-amd64
+    image: opensourcefoundries/gateway-ansible:latest-amd64
     platform:
       architecture: amd64
       features:
