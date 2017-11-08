@@ -4,10 +4,8 @@
 [![Docker Stars](https://img.shields.io/docker/stars/opensourcefoundries/ansible-docker.svg?maxAge=86400)](https://hub.docker.com/r/opensourcefoundries/ansible-docker/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/opensourcefoundries/ansible-docker.svg?maxAge=86400)](https://hub.docker.com/r/opensourcefoundries/ansible-docker/)
 
-
-
 Usage:
-```
-    ssh-copy-id linaro@10.0.1.3
-    ./iot-gateway.sh gateway
-```
+
+1. ssh-copy-id osf@GATEWAY_IP_ADDRESS
+
+2. Use iot-gateway.sh gateway
