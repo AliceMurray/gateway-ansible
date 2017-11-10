@@ -29,7 +29,7 @@ ssh-copy-id <gateway host>
 ### IoT-Gateway
 
 ```
-ansible-playbook -e "mqttuser= mqttpass= mqtthost= mqttport= gitci= tag= registry= registry_user= registry_passwd= registry_email= ansible_python_interpreter=/usr/bin/python3" -i targethost, -u osf iot-gateway.yml
+ansible-playbook -e "mqttuser= mqttpass= mqtthost= mqttport= mgmt-server= tag= registry= registry_user= registry_passwd= registry_email= ansible_python_interpreter=/usr/bin/python3" -i targethost, -u osf iot-gateway.yml
 ```
 
 Ansible tags:
@@ -54,7 +54,7 @@ Arguments:
  - **mqttpass**: mosquitto remote password
  - **mqtthost**: remote mqtt address
  - **mqttport**: remote mqtt service port
- - **gitci**: address for your private hawkbit server
+ - **mgmt-server**: address for your private hawkbit server
  - **tag**: docker container tag (e.g. latest-arm64, latest-armhf or empty for latest)
  - **brokerhost**: mosquitto websocket host (for use with freeboard)
  - **brokeruser**: mosquitto websocket user (for use with freeboard)

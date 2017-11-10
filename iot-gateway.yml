@@ -4,20 +4,20 @@
 #  - install ansible,
 #  - create and copy ssh key
 #  - run playbook with appropriate parameters
-#    i.e. ansible-playbook -e "mqttuser= mqttpass= mqtthost= mqttport= gitci= tag= ansible_python_interpreter=/usr/bin/python3" -i targethost, iot-gateway.yml
+#    i.e. ansible-playbook -e "mqttuser= mqttpass= mqtthost= mqttport= mgmt_server= tag= ansible_python_interpreter=/usr/bin/python3" -i targethost, iot-gateway.yml
 #    where tag is the default docker tag (e.g. latest)
 
 # There are Ansible tags below for the following gateway personalities
 #
 # gateway - start default containers for the gateway
 #  + minimal mosquitto broker (local mqtt port on 1883, websocket port on 9001)
-#  + nginx-http-proxy (expects gitci.com IP as hawkbit will run on a different system)
+#  + nginx-http-proxy (expects device mangement server IP as hawkbit will run on a different system)
 #  + bt-joiner
-#  + NGINX CoAP proxy (expects gitci.com IP as Leshan will run on a different system)
+#  + NGINX CoAP proxy (expects device management server IP as Leshan will run on a different system)
 #  + CF CoAP-HTTP proxy
 # cloud - start containers configured to bridge mqtt data to the cloud
 #  + mosquitto configured for use with cloud service (i.e. Bluemix or Cloudmqtt)
-#  + nginx-http-proxy (expects gitci.com IP as hawkbit will run on a different system)
+#  + nginx-http-proxy (expects device management server IP as hawkbit will run on a different system)
 #  + bt-joiner
 # local - configured to run all services directly on the gateway
 #  + minimal mosquitto broker (local mqtt port on 1883, websocket port on 9001)
@@ -115,7 +115,7 @@
       tmpfs:
         - /var/run
         - /var/cache/nginx
-      etc_hosts: { "gitci.com": "{{ gitci }}"}
+      etc_hosts: { "mgmt.foundries.io": "{{ mgmt_server }}"}
       volumes:
         - /home/osf/nginx-http-proxy.conf:/etc/nginx/nginx.conf
       command: nginx-debug -g 'daemon off;'
@@ -228,7 +228,7 @@
       tmpfs:
         - /var/run
         - /var/cache/nginx
-      etc_hosts: { "gitci.com": "{{ gitci }}"}
+      etc_hosts: { "mgmt.foundries.io": "{{ mgmt_server }}"}
       volumes:
         - /home/osf/nginx-lwm2m.conf:/etc/nginx/nginx.conf
       command: nginx-debug -g 'daemon off;'

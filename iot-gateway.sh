@@ -29,7 +29,7 @@ hostname=${GW_HOSTNAME:-10.0.1.3}
 gatewayuser=osf
 
 # Location where hawkbit is running
-if [ -z "$GITCI" ] ; then
+if [ -z "$MGMT_SERVER" ] ; then
 	if which ip >/dev/null 2>&1 ; then
 		echo "probing linux host for routable ip address"
 		defip=$(ip route get 8.8.8.8 | head -n1 | awk '{print $NF}')
@@ -39,7 +39,7 @@ if [ -z "$GITCI" ] ; then
 	fi
 fi
 [ -z "$defip" ] && defip=10.0.1.2
-gitci=${GITCI:-$defip}
+mgmt_server=${MGMT_SERVER:-$defip}
 
 #Cloudmqtt configuration
 cloudmqtthost=${CLOUDMQTT_HOST:-m12.cloudmqtt.com}
@@ -51,7 +51,7 @@ cloudmqttpw=${CLOUDMQTT_PASSWD:-password}
 ansibletags=${1:-gateway}
 
 ansible-playbook -e "mqttuser=$cloudmqttuser mqttpass=$cloudmqttpw mqtthost=$cloudmqtthost mqttport=$cloudmqttport "\
-                 -e "gitci=$gitci hub=$hub" \
+                 -e "mgmt_server=$mgmt_server hub=$hub" \
                  -e "brokerhost=$hostname brokeruser='' brokerpw=''" \
                  -e "registry=$registry registry_user=$registry_user" \
                  -e "registry_passwd=$registry_passwd registry_email=$registry_email" \
