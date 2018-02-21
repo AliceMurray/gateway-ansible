@@ -52,7 +52,7 @@ if [ -z "$hub" ]; then
 fi
 
 # Gateway target hostname
-hostname=${GW_HOSTNAME:-10.0.1.3}
+hostname=${GW_HOSTNAME:-raspberrypi3-64.local}
 gatewayuser=osf
 
 # Location where hawkbit is running
