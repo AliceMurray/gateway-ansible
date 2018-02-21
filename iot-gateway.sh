@@ -59,7 +59,7 @@ gatewayuser=osf
 if [ -z "$MGMT_SERVER" ] ; then
 	if which ip >/dev/null 2>&1 ; then
 		echo "probing linux host for routable ip address"
-		defip=$(ip route get 8.8.8.8 | head -n1 | awk '{print $NF}')
+		defip=$(ip route get 8.8.8.8 | head -n1 | sed -e 's/.*src //' | cut -d\  -f1)
 	else
 		echo "probing mac host for routable ip address"
 		defip=$(route get 8.8.8.8 | grep interface | awk '{print $2}' | xargs ifconfig | grep 'inet ' | awk '{print $2}')
