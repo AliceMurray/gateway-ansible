@@ -113,7 +113,7 @@
       network_mode: host
       read_only: yes
       tmpfs:
-        - /var/run
+        - /run
         - /var/cache/nginx
       etc_hosts: { "mgmt.foundries.io": "{{ mgmt_server }}"}
       volumes:
@@ -226,7 +226,7 @@
       network_mode: host
       read_only: yes
       tmpfs:
-        - /var/run
+        - /run
         - /var/cache/nginx
       etc_hosts: { "mgmt.foundries.io": "{{ mgmt_server }}"}
       volumes:
