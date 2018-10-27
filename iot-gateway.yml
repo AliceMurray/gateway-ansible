@@ -30,22 +30,6 @@
 # There are also ansible tags for the individual items;
 #   mosquitto-local, mosquitto-cloud, nginx-http-proxy, bt-joiner, freeboard, etc...
 
-# Container Registry login
-- hosts: all
-  gather_facts: no
-  tasks:
-  - assert:
-      that: ( ansible_version.major == 2 and ansible_version.minor >= 4 ) or ( ansible_version.major > 2 )
-      msg: Ansible version 2.4.0 or greater is required.
-  - name: Log into container registry
-    docker_login:
-      registry: "{{ registry|default('hub.foundries.io') }}"
-      username: "{{ registry_user|default('this-is-ignored') }}"
-      password: "{{ registry_passwd }}"                          # mandatory
-      email: "{{ registry_email|default('docker@docker.com') }}" # only for docker hub
-  tags:
-    - always
-
 # This task removes all containers
 - hosts: all
   gather_facts: no
@@ -276,13 +260,3 @@
     - leshan
     - local
 
-# Container Registry logout
-- hosts: all
-  gather_facts: no
-  tasks:
-  - name: Log out of container registry
-    docker_login:
-      state: absent
-      email: "{{ registry_email|default('docker@docker.com') }}" # only for docker hub
-  tags:
-    - always
