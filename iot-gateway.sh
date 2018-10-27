@@ -39,7 +39,7 @@ if [ "$registry" = "hub.foundries.io" ]; then
         exit 1
     fi
     hub=hub.foundries.io
-elif [ "$registry" = "hub.docker.com" ]; then
+elif [ "$registry" = "registry-1.docker.io" ]; then
     hub=opensourcefoundries
 else
     hub=${HUB}

@@ -59,7 +59,7 @@ Arguments:
  - **brokerhost**: mosquitto websocket host (for use with freeboard)
  - **brokeruser**: mosquitto websocket user (for use with freeboard)
  - **brokerpw**: mosquitto websocket password (for use with freeboard)
- - **registry**: container registry address (e.g. hub.docker.com)
+ - **registry**: container registry address (e.g. registry-1.docker.io for dockerhub)
  - **registry_user**: username for the registry account
  - **registry_passwd**: plaintext password for the registry account (or token if 2FA is enabled)
  - **registry_email**: email address for the registry account (required if using Docker Hub)
